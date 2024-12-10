@@ -1,5 +1,5 @@
 from db import database
-from models import complaint, State, user
+from models import complaint, State
 from models.enums import RoleType
 
 
@@ -9,9 +9,9 @@ class ComplaintManager:
     async def get_complaints(user):
         q = complaint.select()
         if user["role"] == RoleType.complainer:
-            result = q.where(complaint.c.complainer_id == user["id"])
+            return q.where(complaint.c.complainer_id == user["id"])
         elif user["role"] == RoleType.admin:
-            result = q.where(complaint.c.status == State.pending)
+            return q.where(complaint.c.status == State.pending)
         return await database.fetch_all(q)
 
     @staticmethod

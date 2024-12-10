@@ -1,21 +1,15 @@
 import datetime
-
 from typing import Optional
-from starlette.requests import Request
 
 import jwt
-
 from decouple import config
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from starlette.requests import Request
 
 from db import database
 from models import user
-
 from models.enums import RoleType
-
-
-# from jwt.exceptions import PyJWTError
 
 
 class AuthManager:
@@ -51,7 +45,7 @@ class CustomHTTPBearer(HTTPBearer):
         except jwt.ExpiredSignatureError:
             raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Expired signature")
         except jwt.InvalidTokenError as ex:
-            raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=f"Invalid Token {ex}")
+            raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail=f"{ex}")
 
 
 oauth2_schema = CustomHTTPBearer()

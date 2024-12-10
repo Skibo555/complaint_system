@@ -4,7 +4,7 @@ from managers.user import UserManager
 
 from schemas.request.user import UserLoginIn, UserRegisterIn
 
-router = APIRouter(tags=["Auth"])
+router = APIRouter(tags=["Auth"], prefix="/auth/user")
 
 
 @router.post("/register/", status_code=201)
